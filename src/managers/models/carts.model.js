@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 
 const cartsSchema = new mongoose.Schema({
-    products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'products' }],
+    products: [{products: { type: mongoose.Schema.Types.ObjectId, ref: 'products', required: true }, quantity: { type: Number, default: 1, required: true } }],
 })
 
 cartsSchema.pre('findOne', function (next) {

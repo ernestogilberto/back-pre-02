@@ -29,11 +29,11 @@ class CartsManager {
         }
     }
 
-    async addProductToCart(id, productId) {
+    async addProductToCart(id, productId, quantity) {
         if(!id) throw new Error('Cart id is required');
         if(!productId) throw new Error('Product id is required');
         try {
-            await CartsModel.findByIdAndUpdate(id, {$push: {products: productId}});
+            await CartsModel.findByIdAndUpdate(id, {$push: {products: {productId, quantity}}});
             return {payload: `Product added to cart successfully`};
         } catch (error) {
             throw new Error(`Error adding product to cart: ${error.message}`);

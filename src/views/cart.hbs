@@ -1,6 +1,6 @@
 <h1>Cart View</h1>
-
-{{#if cart}}
+<p>{{cart.products}}</p>
+{{#if cart.products}}
     <div class="products-container">
         <div class="products-header">
             <p>Product</p>
@@ -13,10 +13,10 @@
         <div class="products">
             {{#each cart.products}}
                 <div class="product-item">
-                    <p>{{this.title}}</p>
-                    <p>{{this.description}}</p>
-                    <p>{{this.code}}</p>
-                    <p>$ {{toFixed this.price 2}}</p>
+                    <p>{{this.product.title}}</p>
+                    <p>{{this.product.description}}</p>
+                    <p>{{this.product.code}}</p>
+                    <p>$ {{toFixed this.product.price 2}}</p>
                     <p>{{this.quantity}}</p>
                     <button class="remove-from-cart" data-id="{{this.id}}">Remove from cart</button>
                 </div>

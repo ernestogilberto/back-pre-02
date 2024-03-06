@@ -26,6 +26,7 @@ router.get('/:cid', async (req, res) => {
             res.status(404).send({ error: 'Cart not found' });
         } else {
             cart = await JSON.parse(JSON.stringify(cart))
+            console.log(cart.products);
             res.status(200).render('cart', {cart});
         }
     } catch (error) {

@@ -33,7 +33,7 @@ class CartsManager {
         if(!id) throw new Error('Cart id is required');
         if(!productId) throw new Error('Product id is required');
         try {
-            await CartsModel.findByIdAndUpdate(id, {$push: {products: {productId, quantity}}});
+            await CartsModel.findByIdAndUpdate(id, {$push: {products: {product: productId, quantity}}});
             return {payload: `Product added to cart successfully`};
         } catch (error) {
             throw new Error(`Error adding product to cart: ${error.message}`);

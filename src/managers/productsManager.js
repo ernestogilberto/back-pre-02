@@ -2,10 +2,30 @@ import {ProductModel} from './models/products.model.js';
 
 class ProductsManager {
 
-    async getProducts() {
+    async getProducts({limit, query , sort , page}) {
+        limit = limit ? parseInt(limit) : 10;
+        page = page ? parseInt(page) : 1;
+        query ? query = JSON.parse(query) : query = {};
+        sort ? sort = JSON.parse(sort) : sort = {};
+
         try {
-            const products = await ProductModel.find();
-            return {payload: products};
+            const products = await ProductModel.paginate(query, {limit, sort, page});
+            // const result = products.docs.map(product => product.toObject());
+            const prevLink = products.hasPrevPage ? `/?limit=${limit}&page=${products.prevPage}&query=${JSON.stringify(query)}&sort=${JSON.stringify(sort)}` : null;
+            const nextLink = products.hasNextPage ? `/?limit=${limit}&page=${products.nextPage}&query=${JSON.stringify(query)}&sort=${JSON.stringify(sort)}` : null;
+            return {
+                payload: products.docs.map(product => product.toObject()),
+                totalPages: products.totalPages,
+                prevPage: products.prevPage,
+                nextPage: products.nextPage,
+                page,
+                hasPrevPage: products.hasPrevPage,
+                hasNextPage: products.hasNextPage,
+                prevLink,
+                nextLink,
+                total: products.totalDocs,
+                limit
+            };
         } catch (error) {
             throw new Error(`Error getting products: ${error.message}`);
         }

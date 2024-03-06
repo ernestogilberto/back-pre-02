@@ -56,6 +56,17 @@ input{
     color: #EEE;
 }
 
+.add-to-cart{
+    text-align: center;
+    margin: 0 auto;
+    padding: .5rem;
+    cursor: pointer;
+    background-color: #1D6D30;
+    color: #EEE;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
 .products-container{
     background-color: #333;
     color: #EEE;
@@ -68,14 +79,14 @@ input{
 .products-header{
     font-weight: bold;
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(9, 1fr);
     margin-bottom: 1rem;
     padding: 1rem;
 }
 
 .product-item{
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(9, 1fr);
     border-top: 1px solid #EEE;
     padding: 1rem;
 }

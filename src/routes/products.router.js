@@ -7,12 +7,10 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        let {limit} = req.query;
-        const {payload: products, error} = await manager.getProducts();
-        if (error) {
-            res.status(400).send(error);
-        }
-        res.status(200).send({products: limit ? products.slice(0, limit) : products});
+        let {limit, query, sort, page} = req.query;
+        const products = await manager.getProducts({limit, query, sort, page});
+
+        res.status(200).send({products});
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal server error');

@@ -44,7 +44,7 @@ class CartsManager {
         if(!id) throw new Error('Cart id is required');
         if(!productId) throw new Error('Product id is required');
         try {
-            await CartsModel.findByIdAndUpdate(id, {$pull: {products: productId}});
+            await CartsModel.findByIdAndUpdate(id, {$pull: {products: {product: productId}}});
             return {payload: `Product deleted from cart successfully`};
         } catch (error) {
             throw new Error(`Error deleting product from cart: ${error.message}`);
@@ -67,6 +67,24 @@ class CartsManager {
             return {payload: `All carts deleted successfully`};
         } catch (error) {
             throw new Error(`Error deleting all carts: ${error.message}`);
+        }
+    }
+
+    async updateProductQuantity(id, productId, quantity) {
+        if(!id) throw new Error('Cart id is required');
+        if(!productId) throw new Error('Product id is required');
+        try {
+            const cart = await CartsModel.findById(id);
+            const productIndex = cart.products.findIndex(product => product.product._id.toString() === productId);
+            if (productIndex === -1) {
+                throw new Error(`Product with id ${productId} not found in cart`);
+            }
+            cart.products[productIndex].quantity = quantity;
+            await cart.save();
+            return {payload: `Quantity updated successfully`};
+        }
+        catch (error) {
+            throw new Error(`Error updating quantity: ${error.message}`);
         }
     }
 }

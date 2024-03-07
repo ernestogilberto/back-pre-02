@@ -62,4 +62,52 @@ router.post('/:cid/product/:pid/quantity/:quantity', async (req, res) => {
     }
 })
 
+router.delete('/:cid', async (req, res) => {
+    try {
+        const id = req.params.cid;
+        const {payload: deletedCart} = await manager.deleteCart(id);
+        if (!deletedCart) {
+            res.status(404).send({ error: 'Cart not found' });
+        } else {
+            res.status(200).send(deletedCart);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+})
+
+router.delete('/:cid/product/:pid', async (req, res) => {
+    try {
+        const cartId = req.params.cid;
+        const productId = req.params.pid;
+        const {payload: deletedProduct} = await manager.deleteProductFromCart(cartId, productId);
+        if (!deletedProduct) {
+            res.status(404).send({ error: 'Cart or product not found' });
+        } else {
+            res.status(200).send(deletedProduct);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+})
+
+router.put('/:cid/product/:pid/quantity/:quantity', async (req, res) => {
+    try {
+        const cartId = req.params.cid;
+        const productId = req.params.pid;
+        const quantity = req.params.quantity;
+        const {payload: updatedProduct} = await manager.updateProductQuantity(cartId, productId, quantity);
+        if (!updatedProduct) {
+            res.status(404).send({ error: 'Cart or product not found' });
+        } else {
+            res.status(200).send(updatedProduct);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+})
+
 export {router}

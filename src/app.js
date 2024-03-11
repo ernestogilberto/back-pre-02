@@ -5,7 +5,15 @@ import {Server} from 'socket.io'
 import {router as productsRouter} from './routes/products.router.js'
 import {router as cartsRouter} from './routes/carts.router.js'
 import {router as viewsRouter} from './routes/views.router.js'
+import {router as sessionsRouter} from './routes/sessions.router.js'
+import {router as usersRouter} from './routes/user.router.js'
 import {__dirname} from './utils.js'
+import cookieParser from 'cookie-parser'
+import session from 'express-session'
+// import FileStore from 'session-file-store'
+import MongoStore from 'connect-mongo';
+
+// const FileStoreSession = FileStore(session);
 
 import {ProductsManager} from './managers/productsManager.js';
 import {MessagesManager} from './managers/messagesManager.js';
@@ -15,6 +23,8 @@ const messagesManager = new MessagesManager();
 
 const PORT = 8080;
 const LOCAL = 'http://127.0.0.1:' + PORT;
+const claveCookies = 'coderhouse';
+// const fileStorage = FileStore(session);
 
 const app = express();
 app.use(express.static('public'));
@@ -29,6 +39,16 @@ mongoose.set('strictQuery', false);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
+app.use(cookieParser( claveCookies));
+app.use(session({
+    secret: 'coderhouse',
+    resave: true,
+    saveUninitialized: true,
+    // store: new FileStoreSession({path: './src/sessions', ttl: 100, retries: 1})
+    store: MongoStore.create({
+        mongoUrl: 'mongodb+srv://ernestogilberto:coderhouse@cluster0.gnfbmpg.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0',
+        ttl: 3000})
+}));
 
 const hbs = create({
     layoutsDir: __dirname + '/views/layouts',
@@ -53,6 +73,8 @@ app.use('/api/cart', cartsRouter)
 app.use('/cart', cartsRouter)
 // app.use('/api/chat', chatRouter)
 app.use('/', viewsRouter)
+app.use('/api/user', usersRouter)
+app.use('/api/session', sessionsRouter)
 
 const socketServer = new Server(httpServer)
 

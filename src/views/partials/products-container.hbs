@@ -1,3 +1,17 @@
+{{#if user}}
+<div class="user-container">
+    <h2 class="welcome-message">Welcome, {{user.first_name}}</h2>
+    <form action="/api/session/logout" method="POST">
+        <input type="submit" value="Logout" class="btn btn-alert">
+    </form>
+</div>
+{{else}}
+<div class="user-container">
+    <a class=" btn btn-submit" href="/api/session/login">Login</a>
+</div>
+
+{{/if}}
+
 {{#if products.payload}}
     <div class="products-container">
         <div class="products-header">
@@ -28,26 +42,35 @@
                     {{#if thumbnail}}
                         <img src="{{thumbnail}}" class="product-img" alt="image of {{this.title}}">
                     {{else}}
-                        <img src="https://cdn-icons-png.flaticon.com/512/3875/3875148.png" class="product-img" alt="missing image of {{this.title}}">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3875/3875148.png" class="product-img"
+                             alt="missing image of {{this.title}}">
                     {{/if}}
-                    <button class="add-to-cart" data-id="{{this.id}}">Add to cart</button>
+                    <div >
+                        <input type="hidden" name="stock" value="{{this.stock}}">
+                        <input type="number" value="1" min="1" max="{{this.stock}}" class="quantity"
+                               data-id="{{this.id}}">
+                        <button class="add-to-cart" data-id="{{this.id}}">Add to cart</button>
+                    </div>
+
                 </div>
             {{/each}}
         </div>
     </div>
-        <div class="pagination">
+    <div class="pagination">
 
-            {{#if products.hasPrevPage}}
-                <a href="{{products.prevLink}}">Previous</a>
-            {{/if}}
+        {{#if products.hasPrevPage}}
+            <a href="{{products.prevLink}}">Previous</a>
+        {{/if}}
 
 
 
-            <span>Page {{products.page}} of {{products.totalPages}}</span>
-            {{#if products.hasNextPage}}
-                <a href="{{products.nextLink}}">Next</a>
-            {{/if}}
-        </div>
+        <span>Page {{products.page}} of {{products.totalPages}}</span>
+        {{#if products.hasNextPage}}
+            <a href="{{products.nextLink}}">Next</a>
+        {{/if}}
+    </div>
 {{else}}
     <div class="product-alert-container"><h2 class="product-alert">Products not found.</h2></div>
 {{/if}}
+
+<script src="/js/addToCart.js"></script>

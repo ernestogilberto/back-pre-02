@@ -13,6 +13,8 @@ chatBox.addEventListener('keyup', (e) => {
     }
 });
 
+
+
 socket.on('history', (data) => {
     let history = document.getElementById('messages');
     let messages = ""

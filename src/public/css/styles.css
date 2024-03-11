@@ -12,6 +12,13 @@ h1{
     margin-bottom: 1.5rem;
 }
 
+h2{
+    color: blue;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
 .form-container{
     background-color: #DDE;
     border-radius: 8px;
@@ -43,6 +50,11 @@ input{
 
 .btn-submit{
     background-color: #41803A;
+    color: #EEE;
+}
+
+.btn-alert{
+    background-color: red;
     color: #EEE;
 }
 

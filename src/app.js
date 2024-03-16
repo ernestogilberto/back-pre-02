@@ -7,16 +7,15 @@ import {router as cartsRouter} from './routes/carts.router.js'
 import {router as viewsRouter} from './routes/views.router.js'
 import {router as sessionsRouter} from './routes/sessions.router.js'
 import {router as usersRouter} from './routes/user.router.js'
-import {__dirname} from './utils.js'
+import {__dirname} from './dirname-path.js'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
-// import FileStore from 'session-file-store'
 import MongoStore from 'connect-mongo';
-
-// const FileStoreSession = FileStore(session);
 
 import {ProductsManager} from './managers/productsManager.js';
 import {MessagesManager} from './managers/messagesManager.js';
+import {initializePassport} from './config/passport.config.js';
+import passport from 'passport';
 
 const manager = new ProductsManager();
 const messagesManager = new MessagesManager();
@@ -24,7 +23,6 @@ const messagesManager = new MessagesManager();
 const PORT = 8080;
 const LOCAL = 'http://127.0.0.1:' + PORT;
 const claveCookies = 'coderhouse';
-// const fileStorage = FileStore(session);
 
 const app = express();
 app.use(express.static('public'));
@@ -67,6 +65,10 @@ app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
 app.set('views', __dirname + '/views');
 
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use('/api/products', productsRouter)
 app.use('/api/cart', cartsRouter)
@@ -74,7 +76,7 @@ app.use('/cart', cartsRouter)
 // app.use('/api/chat', chatRouter)
 app.use('/', viewsRouter)
 app.use('/api/user', usersRouter)
-app.use('/api/session', sessionsRouter)
+app.use('/api/sessions', sessionsRouter)
 
 const socketServer = new Server(httpServer)
 

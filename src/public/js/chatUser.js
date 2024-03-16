@@ -8,6 +8,6 @@ Swal.fire({
     },
 
 }).then((result) => {
-    user = result.value;
+    const user = result.value;
     socket.emit('newUser', user);
 });

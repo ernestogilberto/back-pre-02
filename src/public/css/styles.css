@@ -2,17 +2,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Helvetica Neue",Helvetica,Arial;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
-h1{
-    color: blue;
-    text-align: center;
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-h2{
+h1, h2{
     color: blue;
     text-align: center;
     margin-top: 1rem;
@@ -42,10 +35,14 @@ input{
 
 .btn{
     margin: 0 auto;
-    padding: .5rem;
-    height: 2rem;
+    padding: .75rem;
+    height: fit-content;
     font-weight: bold;
     border-radius: 5px;
+    display: block;
+    text-align: center;
+    width: fit-content;
+    cursor: pointer;
 }
 
 .btn-submit{
@@ -59,11 +56,6 @@ input{
 }
 
 .btn-primary{
-    display: block;
-    text-align: center;
-    margin: 0 auto;
-    max-width: 30%;
-    cursor: pointer;
     background-color: #3358A2;
     color: #EEE;
 }

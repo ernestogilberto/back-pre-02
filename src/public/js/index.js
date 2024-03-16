@@ -6,7 +6,6 @@ let chatBox = document.getElementById('chatBox');
 let user;
 
 chatBox.addEventListener('keyup', (e) => {
-    console.log(e.key);
     if (e.key === 'Enter' && chatBox.value.trim() !== '') {
         socket.emit('chat message', {user: user, message: chatBox.value});
         chatBox.value = '';

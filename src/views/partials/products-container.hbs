@@ -1,14 +1,14 @@
 {{#if user}}
-<div class="user-container">
+
     <h2 class="welcome-message">Welcome, {{user.first_name}}</h2>
-    <form action="/api/session/logout" method="POST">
+    <form action="/api/sessions/logout" method="POST">
         <input type="submit" value="Logout" class="btn btn-alert">
     </form>
-</div>
+
 {{else}}
-<div class="user-container">
-    <a class=" btn btn-submit" href="/api/session/login">Login</a>
-</div>
+
+    <a class="btn btn-submit" href="/api/sessions/login">Login</a>
+
 
 {{/if}}
 

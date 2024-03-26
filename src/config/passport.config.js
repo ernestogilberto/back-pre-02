@@ -2,6 +2,7 @@ import passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local';
 import {Strategy as GitHubStrategy} from 'passport-github2';
 import {UserModel} from '../managers/models/user.model.js'
+import {CartsModel} from '../managers/models/carts.model.js';
 import {hashPassword, comparePassword} from '../utils/hashbcrypt.js';
 
 
@@ -10,13 +11,15 @@ const initializePassport = () => {
     passport.use('register', new LocalStrategy({
         passReqToCallback: true, usernameField: 'email', passwordField: 'password'
     }, async (req, username, password, done) => {
-        const {first_name, last_name, email, age} = req.body;
+        const {first_name, last_name, email, age, role} = req.body;
         try {
             const existingUser = await UserModel.findOne({email});
             if (existingUser) {
                 return done(null, false, {message: 'User already exists'});
             } else {
-                const user = await UserModel.create({first_name, last_name, email, password: await hashPassword(password), age});
+                const cart = new CartsModel();
+                await cart.save();
+                const user = await UserModel.create({first_name, last_name, email, role, password: await hashPassword(password), age, cart: cart._id});
                 return done(null, user);
             }
         } catch (error) {

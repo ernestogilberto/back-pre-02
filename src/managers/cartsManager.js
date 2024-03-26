@@ -23,7 +23,7 @@ class CartsManager {
         try {
             const newCart = new CartsModel();
             await newCart.save();
-            return {payload: `Cart created successfully with id ${newCart._id}`};
+            return {payload: newCart._id};
         } catch (error) {
             throw new Error(`Error creating cart: ${error.message}`);
         }

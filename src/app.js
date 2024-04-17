@@ -11,7 +11,7 @@ import {__dirname} from './dirname-path.js'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import MongoStore from 'connect-mongo';
-import './database.js'
+import './database.js';
 
 import {ProductsManager} from './managers/productsManager.js';
 import {MessagesManager} from './managers/messagesManager.js';

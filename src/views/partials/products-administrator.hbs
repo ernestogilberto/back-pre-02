@@ -1,0 +1,76 @@
+{{#if user}}
+
+    <h2 class="welcome-message">Welcome, {{user.first_name}}</h2>
+    <form action="/api/sessions/logout" method="POST">
+        <input type="submit" value="Logout" class="btn btn-alert">
+    </form>
+
+{{else}}
+
+    <a class="btn btn-submit" href="/api/sessions/login">Login</a>
+
+
+{{/if}}
+
+{{#if products.payload}}
+    <div class="products-container">
+        <div class="products-header">
+            <p>Product</p>
+            <p>Description</p>
+            <p>Code</p>
+            <p>Price</p>
+            <p>Status</p>
+            <p>Stock</p>
+            <p>Category</p>
+            <p>Picture</p>
+            <p>Add to cart</p>
+        </div>
+        <div class="products">
+            {{#each products.payload}}
+                <div class="product-item">
+                    <p>{{this.title}}</p>
+                    <p>{{this.description}}</p>
+                    <p>{{this.code}}</p>
+                    <p>$ {{toFixed this.price 2}}</p>
+                    {{#if this.status}}
+                        <img src="https://cdn-icons-png.flaticon.com/512/4436/4436481.png" alt="active">
+                    {{else}}
+                        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="inactive">
+                    {{/if}}
+                    <p>{{this.stock}}</p>
+                    <p>{{this.category}}</p>
+                    {{#if thumbnail}}
+                        <img src="{{thumbnail}}" class="product-img" alt="image of {{this.title}}">
+                    {{else}}
+                        <img src="https://cdn-icons-png.flaticon.com/512/3875/3875148.png" class="product-img"
+                             alt="missing image of {{this.title}}">
+                    {{/if}}
+                    <div >
+                        <input type="hidden" name="stock" value="{{this.stock}}">
+                        <input type="number" value="1" min="1" max="{{this.stock}}" class="quantity"
+                               data-id="{{this.id}}">
+                        <button class="add-to-cart" data-id="{{this.id}}">Add to cart</button>
+                    </div>
+
+                </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="pagination">
+
+        {{#if products.hasPrevPage}}
+            <a href="{{products.prevLink}}">Previous</a>
+        {{/if}}
+
+
+
+        <span>Page {{products.page}} of {{products.totalPages}}</span>
+        {{#if products.hasNextPage}}
+            <a href="{{products.nextLink}}">Next</a>
+        {{/if}}
+    </div>
+{{else}}
+    <div class="product-alert-container"><h2 class="product-alert">Products not found.</h2></div>
+{{/if}}
+
+<script src="/js/addToCart.js"></script>

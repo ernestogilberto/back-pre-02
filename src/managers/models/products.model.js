@@ -10,6 +10,11 @@ const productsSchema = new mongoose.Schema({
     stock: { type: Number, required: true, min: 0},
     status: { type: Boolean, required: true, default: true },
     category: { type: String, required: true, index: true },
+    country: { type: String, required: true, index: true },
+    volume: { type: Number, required: true },
+    alcohol: { type: Number, required: true },
+    brand: { type: String, required: true, index: true },
+    style: { type: String, required: true, index: true },
 })
 
 productsSchema.plugin(mongoosePaginate);

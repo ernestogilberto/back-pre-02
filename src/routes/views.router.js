@@ -1,32 +1,29 @@
 import express from 'express';
 import {ProductsManager} from '../managers/productsManager.js'
 import {MessagesManager} from '../managers/messagesManager.js';
+import ProductsController from '../controllers/products.controller.js';
+
+const controller = new ProductsController();
 
 const manager = new ProductsManager();
 const messagesManager = new MessagesManager();
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    try {
-        let {limit, query, sort, page} = req.query;
-        let user = req.session.user;
-        const products = await manager.getProducts({limit, query, sort, page});
-        res.status(200).render('home', {products, user});
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal server error');
-    }
-})
+router.get('/', controller.getProducts);
+router.get('/:pid', controller.getProductById);
 
 router.get('/realTimeProducts', async (req, res) => {
     try {
-        const {payload, error} = await manager.getProducts();
-        let products = await JSON.parse(JSON.stringify(payload));
-        if (error) {
-            res.status(400).send(error);
-        }
-        res.status(200).render('realTimeProducts', {products: products});
+        // const {payload, error} = await manager.getProducts();
+        // let products = await JSON.parse(JSON.stringify(payload));
+        let {limit, query, sort, page} = req.query;
+        let user = req.session.user;
+        const products = await manager.getProducts({limit, query, sort, page});
+        // if (error) {
+        //     res.status(400).send(error);
+        // }
+        res.status(200).render('realTimeProducts', {products: products, user});
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal server error');

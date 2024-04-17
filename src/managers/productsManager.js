@@ -34,6 +34,7 @@ class ProductsManager {
     async getProductById(id) {
         if(!id) throw new Error('Product id is required');
         try {
+            console.log(id);
             const product = await ProductModel.findById(id);
             return {payload: product};
         } catch (error) {

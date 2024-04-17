@@ -12,8 +12,7 @@ class CartsManager {
     async getCartById(id) {
         if(!id) throw new Error('Cart id is required');
         try {
-            const cart = await CartsModel.findById(id)
-            return cart;
+            return await CartsModel.findById(id);
         } catch (error) {
             throw new Error(`Error getting cart: ${error.message}`);
         }

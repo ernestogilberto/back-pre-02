@@ -13,32 +13,47 @@
 {{/if}}
 
 {{#if products.payload}}
-    <div class="products-container">
-        <div class="products-header">
-            <p>Product</p>
-            <p>Description</p>
-            <p>Code</p>
-            <p>Price</p>
-            <p>Status</p>
-            <p>Stock</p>
-            <p>Category</p>
-            <p>Picture</p>
-            <p>Add to cart</p>
-        </div>
-        <div class="products">
+    <div class="products-list-container">
+
+        <div class="products-list">
             {{#each products.payload}}
-                <div class="product-item">
-                    <p>{{this.title}}</p>
-                    <p>{{this.description}}</p>
-                    <p>{{this.code}}</p>
-                    <p>$ {{toFixed this.price 2}}</p>
-                    {{#if this.status}}
-                        <img src="https://cdn-icons-png.flaticon.com/512/4436/4436481.png" alt="active">
-                    {{else}}
-                        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="inactive">
-                    {{/if}}
-                    <p>{{this.stock}}</p>
-                    <p>{{this.category}}</p>
+                <div class="product-item-card">
+                    <div class="product-field">
+                        <h2 class="product-title">{{this.title}}</h2>
+                    </div>
+                    <div class="product-field">
+                        <p class="field-name">Brand: </p>
+                        <p class="field-description">{{this.brand}}</p>
+                    </div>
+                    <div class="product-field">
+                        <p class="field-name">Country: </p>
+                        <p class="field-description">{{this.country}}</p>
+                    </div>
+                    <div class="product-field">
+                        <p class="field-name">Category: </p>
+                        <p class="field-description">{{this.category}}</p>
+                    </div>
+                    <div class="product-field">
+                        <p class="field-name">Style: </p>
+                        <p class="field-description">{{this.style}}</p>
+                    </div>
+                    <div class="product-field">
+                        <p class="field-name">Alcohol: </p>
+                        <p class="field-description">{{this.alcohol}}%</p>
+                    </div>
+                    <div class="product-field">
+                        <p class="field-name">Volume: </p>
+                        <p class="field-description">{{this.volume}} ml</p>
+                    </div>
+                    <div class="product-field">
+                        <p class="field-name">Price: </p>
+                        <p class="field-description">$ {{toFixed this.price 2}}</p>
+                    </div>
+                    <div class="product-field">
+                        <p class="field-name">Stock: </p>
+                        <p class="field-description">{{this.stock}}</p>
+                    </div>
+
                     {{#if thumbnail}}
                         <img src="{{thumbnail}}" class="product-img" alt="image of {{this.title}}">
                     {{else}}

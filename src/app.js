@@ -12,8 +12,8 @@ import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import MongoStore from 'connect-mongo';
 import './database.js';
+import ProductsController from './controllers/products.controller.js';
 
-import {ProductsManager} from './managers/productsManager.js';
 import {MessagesManager} from './managers/messagesManager.js';
 import {initializePassport} from './config/passport.config.js';
 import passport from 'passport';
@@ -21,7 +21,7 @@ import {configObject} from './config/config.js';
 
 const {mongoUrl, cookie_secret, local, session_secret, ttl, port} = configObject;
 
-const manager = new ProductsManager();
+const controller = new ProductsController();
 const messagesManager = new MessagesManager();
 
 const app = express();
@@ -83,13 +83,13 @@ const socketServer = new Server(httpServer)
 socketServer.on('connection', (socket) => {
     console.log('New client connected')
     socket.on('new-product', async (data) => {
-        await manager.addProduct(data)
-        const {payload: products} = await manager.getProducts()
+        await controller.addProduct(data)
+        const {payload: products} = await controller.getProducts()
         socketServer.emit('products', products)
     })
     socket.on('delete-product', async (id) => {
-        await manager.deleteById(id)
-        const {payload: products} = await manager.getProducts()
+        await controller.deleteById(id)
+        const {payload: products} = await controller.getProducts()
         socketServer.emit('products', products)
     })
     socket.on('newUser', async (data) => {

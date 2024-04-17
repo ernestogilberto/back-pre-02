@@ -1,8 +1,8 @@
 import passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local';
 import {Strategy as GitHubStrategy} from 'passport-github2';
-import {UserModel} from '../managers/models/user.model.js'
-import {CartsModel} from '../managers/models/carts.model.js';
+import {UserModel} from '../models/user.model.js'
+import {CartsModel} from '../models/carts.model.js';
 import {hashPassword, comparePassword} from '../utils/hashbcrypt.js';
 
 

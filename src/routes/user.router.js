@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import { UserModel } from '../managers/models/user.model.js';
+import { UserModel } from '../models/user.model.js';
 import {hashPassword} from '../utils/hashbcrypt.js';
 import passport from 'passport';
 

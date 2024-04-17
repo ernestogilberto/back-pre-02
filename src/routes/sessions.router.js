@@ -1,5 +1,5 @@
 import express from 'express';
-import {UserModel} from '../managers/models/user.model.js';
+import {UserModel} from '../models/user.model.js';
 import {comparePassword} from '../utils/hashbcrypt.js';
 import passport from 'passport';
 import generateToken from '../utils/jsonwebtoken.js';

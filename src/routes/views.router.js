@@ -1,7 +1,7 @@
 import express from 'express';
 import {ProductsManager} from '../managers/productsManager.js'
 import {MessagesManager} from '../managers/messagesManager.js';
-import ProductsController from '../controllers/products.controller.js';
+import ProductsController from '../controllers/views.controller.js';
 
 const controller = new ProductsController();
 

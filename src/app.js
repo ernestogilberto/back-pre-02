@@ -11,24 +11,24 @@ import {__dirname} from './dirname-path.js'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import MongoStore from 'connect-mongo';
+import './database.js'
 
 import {ProductsManager} from './managers/productsManager.js';
 import {MessagesManager} from './managers/messagesManager.js';
 import {initializePassport} from './config/passport.config.js';
 import passport from 'passport';
+import {configObject} from './config/config.js';
+
+const {mongoUrl, cookie_secret, local, session_secret, ttl, port} = configObject;
 
 const manager = new ProductsManager();
 const messagesManager = new MessagesManager();
 
-const PORT = 8080;
-const LOCAL = 'http://127.0.0.1:' + PORT;
-const claveCookies = 'coderhouse';
-
 const app = express();
 app.use(express.static('public'));
-const httpServer =app.listen(PORT, () => console.log(`Server running on ${LOCAL}`));
+const httpServer =app.listen(port, () => console.log(`Server running on ${local+port}`));
 
-mongoose.connect('mongodb+srv://ernestogilberto:coderhouse@cluster0.gnfbmpg.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(mongoUrl)
   .then(() => {
       console.log('Successfully connected to the database');
   }).catch(err => console.log(err));
@@ -37,15 +37,15 @@ mongoose.set('strictQuery', false);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
-app.use(cookieParser( claveCookies));
+app.use(cookieParser( cookie_secret));
 app.use(session({
-    secret: 'coderhouse',
+    secret: session_secret,
     resave: true,
     saveUninitialized: true,
     // store: new FileStoreSession({path: './src/sessions', ttl: 100, retries: 1})
     store: MongoStore.create({
-        mongoUrl: 'mongodb+srv://ernestogilberto:coderhouse@cluster0.gnfbmpg.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0',
-        ttl: 3000})
+        mongoUrl,
+        ttl})
 }));
 
 const hbs = create({

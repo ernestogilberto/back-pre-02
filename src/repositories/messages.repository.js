@@ -1,6 +1,6 @@
 import {MessageModel} from '../models/messages.model.js';
 
-class MessagesManager {
+class MessagesRepository {
     async getAll() {
         try {
             const messages = await MessageModel.find()
@@ -21,4 +21,4 @@ class MessagesManager {
     }
 }
 
-export {MessagesManager}
+export default MessagesRepository;

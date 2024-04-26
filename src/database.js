@@ -10,10 +10,12 @@ class Database {
             .then(() => {
                 console.log('Successfully connected to the database');
             }).catch(err => console.log(err));
+
     }
 
     static getInstance() {
         if (!Database.#instance) {
+            console.log('Creating instance');
             Database.#instance = new Database();
         }
         return Database.#instance;

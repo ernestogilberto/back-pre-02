@@ -4,13 +4,13 @@ import {comparePassword} from '../utils/hashbcrypt.js';
 import passport from 'passport';
 import generateToken from '../utils/jsonwebtoken.js';
 
-const router = express.Router();
+const sessionsRouter = express.Router();
 
-router.get('/login', (req, res) => {
+sessionsRouter.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.post('/login', async (req, res) => {
+sessionsRouter.post('/login', async (req, res) => {
     passport.authenticate('login', {failureRedirect: '/api/sessions/failureLogin'}, (err, user, info) => {
         if (err) {
             return res.status(500).send({error: err});
@@ -26,17 +26,17 @@ router.post('/login', async (req, res) => {
 
 });
 
-router.get('/github', passport.authenticate('github', {scope: ['user:email']}, (req, res) => {
+sessionsRouter.get('/github', passport.authenticate('github', {scope: ['user:email']}, (req, res) => {
     res.status(200).redirect('/');
 }));
 
-router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/api/sessions/login'}), (req, res) => {
+sessionsRouter.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/api/sessions/login'}), (req, res) => {
     req.session.user = {email: req.user.email, first_name: req.user.first_name, last_name: req.user.last_name, age: req.user.age};
     req.session.login = true;
     res.status(200).redirect('/');
 });
 
-router.post('jwt', async (req, res) => {
+sessionsRouter.post('jwt', async (req, res) => {
     const {email, password} = req.body;
     try {
         const user = await UserModel.findOne({email});
@@ -62,13 +62,13 @@ router.post('jwt', async (req, res) => {
 
 
 
-router.post('/logout', async (req, res) => {
+sessionsRouter.post('/logout', async (req, res) => {
     req.session.destroy();
     res.status(200).redirect('/');
 });
 
-router.get('/failureLogin', (req, res) => {
+sessionsRouter.get('/failureLogin', (req, res) => {
     res.status(400).send({error: 'Invalid credentials'});
 });
 
-export {router};
+export {sessionsRouter};

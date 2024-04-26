@@ -1,14 +1,13 @@
 import express from 'express';
-const router = express.Router();
-import { UserModel } from '../models/user.model.js';
-import {hashPassword} from '../utils/hashbcrypt.js';
 import passport from 'passport';
 
-router.get('/', async (req, res) => {
+const usersRouter = express.Router();
+
+usersRouter.get('/', async (req, res) => {
     res.render('register');
 });
 
-router.post('/', async (req, res) => {
+usersRouter.post('/', async (req, res) => {
     passport.authenticate('register', {failureRedirect: '/api/user/failureRegister'} ,(err, user, info) => {
         if (err) {
             return res.status(500).send({error: err});
@@ -22,8 +21,8 @@ router.post('/', async (req, res) => {
     })(req, res);
 });
 
-router.get('/api/user/failureRegister', (req, res) => {
+usersRouter.get('/api/user/failureRegister', (req, res) => {
     res.status(400).send({error: 'User already exists'});
 });
 
-export {router};
+export {usersRouter};

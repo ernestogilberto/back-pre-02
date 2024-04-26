@@ -117,6 +117,7 @@ input{
     display: flex;
     flex-direction: column;
     gap: .5rem;
+    text-overflow: ellipsis;
 }
 
 .product-field{
@@ -137,6 +138,9 @@ input{
 .product-title{
     font-weight: bold;
     color: #FFF;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .product-item-card img{

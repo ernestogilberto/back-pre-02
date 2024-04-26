@@ -1,10 +1,17 @@
 import {ProductModel} from '../models/products.model.js';
+import ProductsDto from '../dto/products.dto.js';
 
 class ProductsRepository {
 
-    async getProducts({limit, query , sort , page}) {
+    async getProducts(req) {
+        let {limit, query, sort, page} = req;
+        limit = limit ? parseInt(limit) : 10;
+        page = page ? parseInt(page) : 1;
+        query = query ? JSON.parse(query) : {};
+        sort = sort ? JSON.parse(sort) : {};
         try {
-            return await ProductModel.paginate(query, {limit, sort, page});
+            const products = await ProductModel.paginate(query, {limit, sort, page});
+            return new ProductsDto(products, limit, page, query, sort);
         } catch (error) {
             throw new Error(`Error getting products: ${error.message}`);
         }
@@ -22,7 +29,7 @@ class ProductsRepository {
         try {
             const newProduct = new ProductModel(product);
             await newProduct.save();
-            return newProduct._id;
+            return `Product added successfully with id ${newProduct._id}`
         } catch (error) {
             throw new Error(`Error adding product: ${error.message}`);
         }
@@ -47,4 +54,4 @@ class ProductsRepository {
     }
 }
 
-export {ProductsRepository};
+export default ProductsRepository;

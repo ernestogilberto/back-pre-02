@@ -1,30 +1,22 @@
 import express from 'express';
-import {MessagesManager} from '../managers/messagesManager.js';
+import MessagesController from '../controllers/messages.controller.js';
 import ViewsController from '../controllers/views.controller.js';
 import ProductsController from '../controllers/products.controller.js';
 
+const messagesController = new MessagesController();
 const controller = new ViewsController();
 const productController = new ProductsController();
-const messagesManager = new MessagesManager();
 
-const router = express.Router();
+const viewsRouter = express.Router();
 
-router.get('/', controller.getProducts);
-router.get('/:pid', controller.getProductById);
+viewsRouter.get('/chat', messagesController.getAll);
 
-router.get('/realTimeProducts', async (req, res) => {
-    try {
-        let {limit, query, sort, page} = req.query;
-        let user = req.session.user;
-        const products = await productController.getProducts({limit, query, sort, page});
-        res.status(200).render('realTimeProducts', {products: products, user});
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal server error');
-    }
-})
+viewsRouter.get('/realTimeProducts', controller.getRealTimeProducts);
 
-router.post('/realTimeProducts', async (req, res) => {
+viewsRouter.get('/', controller.getProducts);
+viewsRouter.get('/:pid', controller.getProductById);
+
+viewsRouter.post('/realTimeProducts', async (req, res) => {
     try {
         const product = req.body;
         await productController.addProduct(product);
@@ -41,7 +33,7 @@ router.post('/realTimeProducts', async (req, res) => {
     }
 })
 
-router.delete('/realTimeProducts/:pid', async (req, res) => {
+viewsRouter.delete('/realTimeProducts/:pid', async (req, res) => {
     try {
         let id = req.params.pid;
         const {payload: deletedProduct, error} = await productController.deleteById(id);
@@ -55,11 +47,4 @@ router.delete('/realTimeProducts/:pid', async (req, res) => {
     }
 })
 
-router.get('/chat', async(req, res) => {
-
-    const {payload} = await messagesManager.getAll();
-    const messages = await JSON.parse(JSON.stringify(payload));
-    res.render('chat', {messages})
-})
-
-export {router}
+export {viewsRouter};

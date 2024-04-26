@@ -3,9 +3,9 @@ import {CartsManager} from '../managers/cartsManager.js'
 
 const manager = new CartsManager();
 
-const router = express.Router();
+const cartsRouter = express.Router();
 
-router.get('/', async (req, res) => {
+cartsRouter.get('/', async (req, res) => {
     try {
         const {payload: carts} = await manager.getCarts();
         if (!carts) {
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/:cid', async (req, res) => {
+cartsRouter.get('/:cid', async (req, res) => {
     try {
         const id = req.params.cid;
         let  cart = await manager.getCartById(id);
@@ -34,7 +34,7 @@ router.get('/:cid', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+cartsRouter.post('/', async (req, res) => {
     try {
         const {payload: newCart} = await manager.createCart();
         res.status(201).send(newCart);
@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.post('/:cid/product/:pid/quantity/:quantity', async (req, res) => {
+cartsRouter.post('/:cid/product/:pid/quantity/:quantity', async (req, res) => {
     try {
         const cartId = req.params.cid;
         const productId = req.params.pid;
@@ -61,7 +61,7 @@ router.post('/:cid/product/:pid/quantity/:quantity', async (req, res) => {
     }
 })
 
-router.delete('/:cid', async (req, res) => {
+cartsRouter.delete('/:cid', async (req, res) => {
     try {
         const id = req.params.cid;
         const {payload: deletedCart} = await manager.deleteCart(id);
@@ -76,7 +76,7 @@ router.delete('/:cid', async (req, res) => {
     }
 })
 
-router.delete('/:cid/product/:pid', async (req, res) => {
+cartsRouter.delete('/:cid/product/:pid', async (req, res) => {
     try {
         const cartId = req.params.cid;
         const productId = req.params.pid;
@@ -92,7 +92,7 @@ router.delete('/:cid/product/:pid', async (req, res) => {
     }
 })
 
-router.put('/:cid/product/:pid/quantity/:quantity', async (req, res) => {
+cartsRouter.put('/:cid/product/:pid/quantity/:quantity', async (req, res) => {
     try {
         const cartId = req.params.cid;
         const productId = req.params.pid;
@@ -109,4 +109,4 @@ router.put('/:cid/product/:pid/quantity/:quantity', async (req, res) => {
     }
 })
 
-export {router}
+export {cartsRouter};

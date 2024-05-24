@@ -1,19 +1,19 @@
 import dotenv from 'dotenv';
 import {program} from '../utils/commander.js';
 
-const {mode} = program.opts();
+const {mode = 'development'} = program.opts();
 
 dotenv.config({
     path: `./.env.${mode}`
 });
 
-const configObject = {
+const config = {
     port: process.env.PORT,
     local: process.env.LOCAL,
-    cookie_secret: process.env.COOKIE_SECRET,
-    session_secret: process.env.SESSION_SECRET,
+    cookieSecret: process.env.COOKIE_SECRET,
+    sessionSecret: process.env.SESSION_SECRET,
     mongoUrl: process.env.MONGO_URL,
     ttl: process.env.TTL
 }
 
-export {configObject}
+export {config}

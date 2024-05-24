@@ -1,0 +1,66 @@
+paths:
+  api/carts/{id}:
+    get:
+      tags:
+            - Carts
+      summary: Get cart
+      description: Get cart by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of cart to return
+          schema:
+              $type: String
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        id:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+    CartItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        quantity:
+          type: integer
+models:
+  Cart:
+    id: 1
+    items:
+      - id: 1
+        name: "Item 1"
+        price: 10.0
+        quantity: 1
+      - id: 2
+        name: "Item 2"
+        price: 20.0
+        quantity: 2
+  CartItem:
+    id: 1
+    name: "Item 1"
+    price: 10.0
+    quantity: 1

@@ -7,7 +7,7 @@ class CheckoutsController {
     async getCheckoutsByUser(req, res) {
         try {
             const checkouts = await repository.getCheckoutsByUser(req.query);
-            res.json(checkouts);
+            res.status(200).send(checkouts)
         } catch {
             res.status(500).json({error: 'Error getting checkouts'})
         }
@@ -16,7 +16,7 @@ class CheckoutsController {
     async getCheckoutById(req, res) {
         try {
             const checkout = await repository.getCheckoutById(req.params.cid);
-            res.json(checkout);
+            res.status(200).send(checkout)
         } catch {
             res.status(500).json({error: 'Error getting checkout'})
         }
@@ -25,7 +25,7 @@ class CheckoutsController {
     async addCheckout(req, res) {
         try {
             const addCheckoutResult = await repository.addCheckout(req.body);
-            res.json(addCheckoutResult);
+            res.status(201).send(addCheckoutResult);
         } catch {
             res.status(500).json({error: 'Error adding checkout'})
         }
@@ -35,7 +35,7 @@ class CheckoutsController {
     async deleteById(req, res) {
         try {
             const deleteCheckoutResult = await repository.deleteById(req.params.cid);
-            res.json(deleteCheckoutResult);
+            res.status(200).send(deleteCheckoutResult);
         } catch {
             res.status(500).json({error: 'Error deleting checkout'})
         }

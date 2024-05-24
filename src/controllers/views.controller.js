@@ -17,7 +17,7 @@ class ViewsController {
     async getProductById(req, res) {
         try {
             const product = await repository.getProductById(req.params.pid);
-            res.json(product);
+            res.status(200).send(product)
         } catch {
             res.status(500).json({error: 'Error getting product'})
         }

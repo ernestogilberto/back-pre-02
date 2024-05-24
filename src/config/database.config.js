@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-import {configObject} from './config/config.js';
-const {mongoUrl} = configObject;
+import {config} from './config.js';
+const {mongoUrl} = config;
 
-class Database {
+class DatabaseConfig {
     static #instance
 
     constructor() {
@@ -14,12 +14,12 @@ class Database {
     }
 
     static getInstance() {
-        if (!Database.#instance) {
+        if (!DatabaseConfig.#instance) {
             console.log('Creating instance');
-            Database.#instance = new Database();
+            DatabaseConfig.#instance = new DatabaseConfig();
         }
-        return Database.#instance;
+        return DatabaseConfig.#instance;
     }
 }
 
-Database.getInstance()
+DatabaseConfig.getInstance()

@@ -8,7 +8,7 @@ class MessagesController {
             console.log('getAll', req);
             try {
                 const messages = await repository.getAll();
-                res.render('chat', {messages})
+                res.status(200).render('chat', {messages})
             } catch {
                 res.status(500).json({error: 'Error getting messages'})
             }
@@ -17,7 +17,7 @@ class MessagesController {
         async save(req, res) {
             try {
                 const saveResult = await repository.save(req.body);
-                res.json(saveResult);
+                res.status(201).send(saveResult);
             } catch {
                 res.status(500).json({error: 'Error adding message'})
             }

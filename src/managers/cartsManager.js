@@ -76,7 +76,7 @@ class CartsManager {
             const cart = await CartsModel.findById(id);
             const productIndex = cart.products.findIndex(product => product.product._id.toString() === productId);
             if (productIndex === -1) {
-                throw new Error(`Product with id ${productId} not found in cart`);
+                return {payload: `Product not found in cart`};
             }
             cart.products[productIndex].quantity = quantity;
             await cart.save();
@@ -86,6 +86,21 @@ class CartsManager {
             throw new Error(`Error updating quantity: ${error.message}`);
         }
     }
+
+    // async updateProductQuantities(updates) {
+    //     try {
+    //         const bulkOperations = updates.map(({ id, productId, quantity }) => ({
+    //             updateOne: {
+    //                 filter: { _id: id, 'products.product': productId },
+    //                 update: { $set: { 'products.$.quantity': quantity } }
+    //             }
+    //         }));
+    //         await CartsModel.bulkWrite(bulkOperations); // Using bulkWrite for batch updates
+    //         return { payload: `Quantities updated successfully` };
+    //     } catch (error) {
+    //         throw new Error(`Error updating quantities: ${error.message}`);
+    //     }
+    // }
 }
 
 export {CartsManager};

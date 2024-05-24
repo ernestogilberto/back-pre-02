@@ -1,0 +1,16 @@
+<h1>Profile View</h1>
+
+{{#if user}}
+    <h2>{{user.first_name}} {{user.last_name}}</h2>
+    <h3>{{user.email}}</h3>
+{{else}}
+    <h2>User not found</h2>
+{{/if}}
+
+{{#if user}}
+    <a class="btn btn-primary" href="/">Store</a>
+    <a class="btn btn-secondary" href="/api/sessions/logout">Logout</a>
+{{else}}
+    <a class="btn btn-primary" href="/api/user">Register</a>
+    <a class="btn btn-secondary" href="/api/sessions/login">Login</a>
+{{/if}}

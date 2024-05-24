@@ -23,7 +23,7 @@
     "type": "git",
     "url": "git+https://github.com/ernestogilberto/back-pre-02.git"
   },
-  "author": "Ernesto Gilberto Valenzuela Gallard",
+  "author": "Ernesto Gilberto Valenzuela Gallardo",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ernestogilberto/back-pre-02/issues"
@@ -49,6 +49,9 @@
     "passport-github2": "^0.1.12",
     "passport-local": "^1.0.0",
     "session-file-store": "^1.5.0",
-    "socket.io": "^4.7.4"
+    "socket.io": "^4.7.4",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "winston": "^3.13.0"
   }
 }

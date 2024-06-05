@@ -5,7 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/Products.test.js --exit",
     "dev": "nodemon src/app.js -m development",
     "start": "node src/app.js -m production"
   },

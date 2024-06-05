@@ -31,7 +31,10 @@
   "homepage": "https://github.com/ernestogilberto/back-pre-02#readme",
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
-    "nodemon": "^3.1.0"
+    "chai": "^5.1.1",
+    "mocha": "^10.4.0",
+    "nodemon": "^3.1.0",
+    "supertest": "^7.0.0"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
